@@ -1,0 +1,60 @@
+#include <iostream>
+
+class DynamicArray {
+private:
+    int* data;
+    size_t size;
+
+public:
+    DynamicArray(size_t size) : size(size) {
+        data = new int[size];
+        for (size_t i = 0; i < size; i++) {
+            data[i] = 0;
+        }
+    }
+
+    ~DynamicArray() {
+        delete[] data;
+    }
+
+    DynamicArray(const DynamicArray& other) : size(other.size) {
+        data = new int[size];
+        for (size_t i = 0; i < size; i++) {
+            data[i] = other.data[i];
+        }
+    }
+
+    int get(size_t index) const {
+        if (index >= size) {
+            throw std::out_of_range("Index out of range");
+        }
+        return data[index];
+    }
+
+    void set(size_t index, int value) {
+        if (index >= size) {
+            throw std::out_of_range("Index out of range");
+        }
+        data[index] = value;
+    }
+
+    size_t getSize() const {
+        return size;
+    }
+};
+
+int main() {
+    DynamicArray arr(5);
+    arr.set(0, 10);
+    arr.set(1, 20);
+    arr.set(2, 30);
+    arr.set(3, 40);
+    arr.set(4, 50);
+
+    for (size_t i = 0; i < arr.getSize(); i++) {
+        std::cout << arr.get(i) << " ";
+    }
+    std::cout << std::endl;
+
+    return 0;
+}
